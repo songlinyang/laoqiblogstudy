@@ -27,3 +27,6 @@ def register(request):
     if request.method == "GET":
         user_form = RegistrationForm()
         return render(request,"account/register.html",{"form":user_form})
+
+    elif request.method == "POST":
+        user_form = RegistrationForm()
