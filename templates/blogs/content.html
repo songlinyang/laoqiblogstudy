@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %} 博客内容 {% endblock %}
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+        <h1>{{ article.title }}</h1>
+        <p>作者：{{ article.author }}<em>发布日期：{{ publish }}</em></p>
+    </div>
+    <div>{{ article.body }}</div>
+
+{% endblock %}

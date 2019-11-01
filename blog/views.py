@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 
 from blog.models import BlogArticles
@@ -15,6 +15,6 @@ def blog_title(request):
     return render(request,"blogs/title.html",{"blogs":blogs})
 
 def blog_article(reqeust,article_id):
-    article = BlogArticles.objects.get(id=article_id)
+    article = get_object_or_404(BlogArticles,id=article_id)
     pub = article.publish
     return render(reqeust,"blogs/content.html",{"article":article,"publish":pub})

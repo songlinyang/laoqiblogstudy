@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}注册{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>注册</h1>
+    <form class="form-horizontal" action="." method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" class="">用户名</label>
+            <div id="{{ form.username.id_for_label }}" class="">{{ form.username }}</div>
+            <label for="{{ form.email.id_for_label }}" class="">邮箱</label>
+            <div id="{{ form.email.id_for_label }}" class="">{{ form.email }}</div>
+            <label for="{{ form.password.id_for_label }}" class="">密码</label>
+            <div id="{{ form.password.id_for_label }}" class="">{{ form.password }}</div>
+            <label for="{{ form.password2.id_for_label }}" class="">确认密码</label>
+            <div id="{{ form.password2.id_for_label }}" class="">{{ form.password2 }}</div>
+            <!--<label for="" class=""></label>-->
+            <!--<div id="" class=""></div>-->
+            <!--<label for="" class=""></label>-->
+            <!--<div id="" class=""></div>-->
+        </div>
+    </form>
+
+
+<div class=""></div>
+<div class=""></div>
+</div>
+{% endblock %}
