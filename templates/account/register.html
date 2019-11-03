@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <h1>注册</h1>
-    <form class="form-horizontal" action="." method="post">
+    <form class="form-horizontal" action="{% url 'account:register' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="{{ form.username.id_for_label }}" class="">用户名</label>

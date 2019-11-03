@@ -29,4 +29,14 @@ def register(request):
         return render(request,"account/register.html",{"form":user_form})
 
     elif request.method == "POST":
-        user_form = RegistrationForm()
+        user_form = RegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password2'])
+            new_user.save()
+            return HttpResponse("成功")
+        else:
+            # print(user_form)
+            # return render(request,"account/register.html",{"form",user_form})
+            return HttpResponse("注册失败")
+
