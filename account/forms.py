@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from account.models import UserProfile
 """
 <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" required id="id_username"></td></tr>
 <tr><th><label for="id_password">Password:</label></th><td><input type="password" name="password" required id="id_password"></td></tr>
@@ -24,3 +25,9 @@ class RegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError("请再次确认密码")
         return cd['password2']
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ("phone",)
