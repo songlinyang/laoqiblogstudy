@@ -13,10 +13,15 @@
   <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 
       {% if user.is_authenticated %}
-      <li class="nav-item dropdown">
-      <a class="nav-item nav-link mr-md-2" href="#">
-          用户名:{{user.username}}
-      </a>
+      <li>
+          <div>
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown">
+                  {{ user.username }} <span class="caret"></span>
+              </button>
+              <ul>
+                  <li><a href="{% url 'account:password_change' %}">修改密码</a></li>
+              </ul>
+          </div>
       </li>
       <li class="nav-item dropdown">
       <a class="nav-item nav-link dropdown-toggle mr-md-2" href="{% url 'account:user_logout' %}" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,6 +51,8 @@
     </li>
   </ul>
 </header>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
 <style>
   header {
     background-color:#00BBFF;
