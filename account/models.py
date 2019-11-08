@@ -9,3 +9,16 @@ class UserProfile(models.Model):
     createTime = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return 'user {}'.format(self.user.username)
+
+
+class UserInfo(models.Model):
+    user = models.OneToOneField(User,unique=True,on_delete=None) #对应用户
+    school = models.CharField(max_length=100,blank=True) #毕业院校
+    company = models.CharField(max_length=100,blank=True) # 所在公司
+    profession = models.CharField(max_length=100,blank=True) # 专业
+    address = models.CharField(max_length=100,blank=True) # 地址
+    aboutme = models.TextField(blank=True) # 个人简介
+    crateTime = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return "User:{}".format(self.user.username)
+
