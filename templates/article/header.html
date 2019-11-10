@@ -1,0 +1,68 @@
+<!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <a href="index.html" class="logo" style="text-decoration:none;"><span>博客<span>后台</span></span><i class="mdi mdi-layers"></i></a>
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+
+                        <!-- Page title -->
+                        <ul class="nav navbar-nav flex-row ml-md-auto d-none d-md-flex collapse">
+                            <li class="list-inline-item">
+                                <button class="button-menu-mobile open-left">
+                                    <i class="mdi mdi-menu"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-item nav-link mr-md-2" href="{% url 'article:article_column' %}">文章管理</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-item nav-link mr-md-2" href="{% url 'blog:blog_title' %}">网站首页</a>
+                            </li>
+                        </ul>
+
+                        <nav class="navbar-custom">
+
+                            <ul class="list-unstyled topbar-right-menu float-right mb-0">
+
+                                <li>
+                                    <!-- Notification -->
+                                    <div class="notification-box">
+                                        <ul class="list-inline mb-0">
+                                            <li>
+                                                <a href="javascript:void(0);" class="right-bar-toggle">
+                                                    <i class="mdi mdi-bell-outline noti-icon"></i>
+                                                </a>
+                                                <div class="noti-dot">
+                                                    <span class="dot"></span>
+                                                    <span class="pulse"></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Notification bar -->
+                                </li>
+
+                                <li class="hide-phone">
+                                    <form class="app-search">
+                                        <input type="text" placeholder="Search..."
+                                               class="form-control">
+                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div><!-- end container -->
+                </div><!-- end navbar -->
+            </div>
+            <!-- Top Bar End -->
+<style>
+    a {
+        text-decoration:none;
+    }
+</style>
