@@ -4,4 +4,8 @@ from . import views
 app_name = "article"
 urlpatterns = [
     path('article-column/',views.article_column,name="article_column"),
+    path('rename_article_column/',views.rename_article_column,name="rename_article_column"),
+    path('delete_article_column/',views.del_article_column,name="del_article_column"),
+    path('article-post/',views.article_post,name="article_post"),
+    path('article-list/',views.article_list,name="article_list")
 ]

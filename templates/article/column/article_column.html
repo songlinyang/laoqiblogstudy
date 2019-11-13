@@ -1,11 +1,20 @@
 {% extends "article/base.html" %}
 {% load staticfiles %}
 {% block title %}article column{% endblock %}
+{% block css %}
+<!--Morris Chart CSS -->
+<link rel="stylesheet" href="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.css">
+<link rel="shortcut icon" href="http://demo.demohuo.top/modals/39/3968/demo/assets/images/favicon.ico">
+<!-- App css -->
+<link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/icons.css" rel="stylesheet" type="text/css" />
+<link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/style.css" rel="stylesheet" type="text/css" />
+
+{% load staticfiles %}
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
-<div class="content-page" style="margin-top: 1cm">
-    <!-- Start content -->
-    <div class="content">
-        <div class="container-fluid">
+<div class="container-fluid">
         <p class="text-right"><button class="btn btn-primary" onclick="add_column()" id="add_column">add column</button></p>
         <table class="table table-hover">
         <tr>
@@ -17,19 +26,83 @@
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ column.column }}</td>
-            <td>--</td>
+            <td>
+                <a name="edit" href="javascript:" onclick="edit_column(this,{{ column.id }})"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a name="delete" href="javascript:" onclick="del_column(this,{{ column.id }})"><span class="glyphicon glyphicon-trash" style="margin-left:20px;color:red"></span></a>
+            </td>
         </tr>
         {% empty %}
         <p>还没有设置栏目，太懒了</p>
         {% endfor %}
         </table>
-        </div>
-    </div>
 </div>
 
     <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
     <script type="text/javascript">
+    function edit_column(the,column_id) {
+        var name = $(the).parents("tr").children('td').eq(1).text();
+        var index = layer.open({
+            type:1,
+            skin:"layui-layer-rim",
+            area:["400px","200px"],
+            title:"编辑栏目",
+            content:'<div class="text-center" style="margin-top:20px"><p>请编辑目录的名称</p><input type="text" id="new_name" value="'+name+'"></div>',
+            btn:['确定','取消'],
+            yes:function(index,layero){
+                new_name = $("#new_name").val();
+                $.ajax({
+                    url:"{% url 'article:rename_article_column' %}",
+                    type:"POST",
+                    data:{"column_id":column_id,"column_name":new_name},
+                    success:function(e){
+                        if (e=="1"){
+                            parent.location.reload();
+                            layer.msg("OK");
+                        }else if(e=="0"){
+                            layer.msg("新的名称没有保存，修改失败");
+                        }else{
+                            layer.msg(e)
+                        }
+                    }
+                });
+            },
+            btn2:function(index,layero){
+                layer.close(index);
+            }
+        });
+    }
+    function del_column(the,column_id) {
+        //var name = $(the).parents("tr").children('td').eq(1).text();
+        var index = layer.open({
+            type:1,
+            skin:"layui-layer-rim",
+            area:["400px","150px"],
+            title:"删除栏目",
+            content:'<div class="text-center" style="margin-top:20px"><p>是否确定删除栏目</p></div>',
+            btn:['确定','取消'],
+            yes:function(index,layero){
+                $.ajax({
+                    url:"{% url 'article:del_article_column' %}",
+                    type:"POST",
+                    data:{"column_id":column_id},
+                    success:function(e){
+                        if (e=="1"){
+                            parent.location.reload();
+                            layer.msg("OK");
+                        }else if(e=="0"){
+                            layer.msg("删除出错");
+                        }else{
+                            layer.msg(e)
+                        }
+                    }
+                });
+            },
+            btn2:function(index,layero){
+                layer.close(index);
+            }
+        });
+    }
     function add_column() {
         var index = layer.open({
            type:1,
@@ -40,7 +113,20 @@
             btn:['确定','取消'],
             yes:function (index,layero) {
                 column_name = $('#id_column').val();
-                alert(column_name);
+                $.ajax({
+                    url:'{% url 'article:article_column' %}',
+                    type:'POST',
+                    data:{"column":column_name},
+                    success:function(e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("已提交成功")
+                        }else if(e=="2"){
+                            layer.msg("此栏目已存在，请更换名称")
+                        }
+                    }
+
+                });
             },
             btn2:function(index,layero){
                 layer.close(index);
@@ -49,3 +135,29 @@
     }
     </script>
 {% endblock %}
+
+<!-- jQuery  -->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/popper.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/bootstrap.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/detect.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/fastclick.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.blockUI.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/waves.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.nicescroll.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.slimscroll.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.scrollTo.min.js"></script>
+<!-- KNOB JS -->
+<!--[if IE]>
+<script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+<![endif]-->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/jquery-knob/jquery.knob.js"></script>
+<!--Morris Chart-->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/raphael/raphael-min.js"></script>
+<!-- Dashboard init -->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/pages/jquery.dashboard.js"></script>
+<!-- App js -->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.core.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.app.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/modernizr.min.js"></script>

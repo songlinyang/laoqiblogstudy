@@ -2,66 +2,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-        <meta name="author" content="Coderthemes">
-
-        <link rel="shortcut icon" href="http://demo.demohuo.top/modals/39/3968/demo/assets/images/favicon.ico">
-
-         <title>{% block title %}模板标题{% endblock %}</title>
-
-        <!--Morris Chart CSS -->
-		<link rel="stylesheet" href="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.css">
-
-        <!-- App css -->
-        <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/style.css" rel="stylesheet" type="text/css" />
-
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/modernizr.min.js"></script>
-        {% load staticfiles %}
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<meta charset="utf-8">
+    <title>{% block title %}模板标题{% endblock %}</title>
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.css">
+    <link rel="shortcut icon" href="http://demo.demohuo.top/modals/39/3968/demo/assets/images/favicon.ico">
+    <!-- App css -->
+    <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="http://demo.demohuo.top/modals/39/3968/demo/assets/css/style.css" rel="stylesheet" type="text/css" />
+    {% block css %}
+        css样式
+    {% endblock %}
 </head>
 <body>
-
 {% include 'article/header.html' %}
-
-{% block content %}
-模板内容
-{% endblock %}
-
+<div class="content-page" style="margin-top: 1cm">
+    <!-- Start content -->
+    <div class="content">
+        {% block content %}
+         模板内容
+        {% endblock %}
+    </div>
+</div>
 {% include 'article/leftslider.html' %}
-
 {% include 'article/footer.html' %}
 <!-- jQuery  -->
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.min.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/popper.min.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/bootstrap.min.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/detect.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/fastclick.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.blockUI.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/waves.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.nicescroll.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.slimscroll.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.scrollTo.min.js"></script>
-
-        <!-- KNOB JS -->
-        <!--[if IE]>
-        <script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
-        <![endif]-->
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/jquery-knob/jquery.knob.js"></script>
-
-        <!--Morris Chart-->
-		<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.min.js"></script>
-		<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/raphael/raphael-min.js"></script>
-
-        <!-- Dashboard init -->
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/pages/jquery.dashboard.js"></script>
-
-        <!-- App js -->
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.core.js"></script>
-        <script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.app.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/popper.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/bootstrap.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/detect.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/fastclick.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.blockUI.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/waves.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.nicescroll.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.slimscroll.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.scrollTo.min.js"></script>
+<!-- KNOB JS -->
+<!--[if IE]>
+<script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+<![endif]-->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/jquery-knob/jquery.knob.js"></script>
+<!--Morris Chart-->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/morris/morris.min.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/plugins/raphael/raphael-min.js"></script>
+<!-- Dashboard init -->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/pages/jquery.dashboard.js"></script>
+<!-- App js -->
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.core.js"></script>
+<script src="http://demo.demohuo.top/modals/39/3968/demo/assets/js/jquery.app.js"></script>
+{% block js %}{% endblock %}
 </body>
 </html>

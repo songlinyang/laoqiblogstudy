@@ -1,0 +1,30 @@
+{% extends "article/base.html" %}
+{% load staticfiles %}
+{% block title %}文章列表{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'editor/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'editor/css/editormd.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <table class="table table-hover">
+        <tr>
+            <td>序号</td>
+            <td>标题</td>
+            <td>栏目</td>
+            <td>操作</td>
+        </tr>
+        {% for article in articles %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{article.title}}</td>
+            <td>{{article.column}}</td>
+            <td>--</td>
+        </tr>
+        {% empty %}
+        <p>没有任何数据</p>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
