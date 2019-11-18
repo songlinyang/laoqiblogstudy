@@ -1,0 +1,17 @@
+{% extends "article/base.html" %}
+{% load staticfiles %}
+{% block title %}博客文章{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'editor/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'editor/css/editormd.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <h1>{{ article.title }}</h1>
+    <p>{{user.username}}</p>
+    <div>
+        {{article.body}}
+    </div>
+</div>
+{% endblock %}

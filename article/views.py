@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,reverse
+from django.shortcuts import get_object_or_404
 from .models import ArticleColumn
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -10,8 +11,7 @@ from .forms import ArticleColumnForm
 from .forms import ArticlePostForm
 # Create your views here.
 
-
-@login_required(login_url="/account/newlogin/")
+@login_required(login_url="accpunt/newlogin/")
 @csrf_exempt
 def article_column(request):
     if request.method == "GET":
@@ -32,7 +32,7 @@ def article_column(request):
             return HttpResponse("获取表单数据异常")
 
 
-@login_required(login_url='/account/login')
+@login_required(login_url="accpunt/newlogin/")
 @csrf_exempt
 @require_POST
 def rename_article_column(request):
@@ -53,7 +53,7 @@ def rename_article_column(request):
     else:
        return HttpResponse("不能为空")
 
-@login_required(login_url='/account/login')
+@login_required(login_url="accpunt/newlogin/")
 @csrf_exempt
 @require_POST
 def del_article_column(request):
@@ -66,11 +66,10 @@ def del_article_column(request):
         return HttpResponse('0')
 
 
-@login_required(login_url="/account/login")
+@login_required(login_url="accpunt/newlogin/")
 @csrf_exempt
 def article_post(request):
     if request.method == "POST":
-        print(request.POST)
         article_post_forms = ArticlePostForm(data=request.POST)
         if article_post_forms.is_valid():
             #前端传回值
@@ -94,8 +93,21 @@ def article_post(request):
         article_columns = request.user.article_column.all()
         return render(request,"article/column/article_post.html",{"article_post_form":article_post_form,"article_columns":article_columns})
 
-@login_required(login_url="/account/login")
+"""
+文章列表
+"""
+@login_required(login_url="accpunt/newlogin/")
 def article_list(request):
     articles = ArticlePost.objects.filter(author=request.user)
     print(articles)
     return render(request,"article/column/article_list.html",{"articles":articles})
+
+
+"""
+文章详情
+"""
+@login_required(login_url="accpunt/newlogin/")
+def article_detail(reqeust,id,slug):
+
+    article = get_object_or_404(ArticlePost,id=id,slug=slug)
+    return render(reqeust,"article/column/article_detail.html",{"article":article})

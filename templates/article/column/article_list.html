@@ -17,10 +17,13 @@
         </tr>
         {% for article in articles %}
         <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{article.title}}</td>
+            <td>{{forloop.counter}}</td> 
+            <td><a href="{{article.get_absolute_url}}">{{article.title}}</a></td>
             <td>{{article.column}}</td>
-            <td>--</td>
+            <td>
+                <a href="javascript:" onclick="edit_article(this,{{article.id}})"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="javascript:" onclick="del_article(this,{{article.id}})"><span class="glyphicon glyphicon-trash" style="margin-left:20px;color:red;"></span></a>
+            </td>
         </tr>
         {% empty %}
         <p>没有任何数据</p>
@@ -28,3 +31,16 @@
     </table>
 </div>
 {% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
+    <script type="text/javascript">
+        function del_article(the,article_id){
+            var article_name = $(the).parent("tr").children("td").eq(1).texWt();
+            layer.open({
+                type:1,
+                skin:"layui-layer-rim",
+                area:["400px","200px"],
+                title:"删除文章",
+            })
+        }
+    </script>

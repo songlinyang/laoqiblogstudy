@@ -11,7 +11,6 @@ def index(request):
 
 def blog_title(request):
     blogs = BlogArticles.objects.all()
-    print("hello",blogs)
     return render(request,"blogs/title.html",{"blogs":blogs})
 
 def blog_article(reqeust,article_id):

@@ -39,7 +39,7 @@ class ArticlePost(models.Model):
     def __str__(self):
             return self.title
 
-        #重写save方法
+    #重写save方法
     def save(self, *args, **kargs):
         self.slug = slugify(self.title)
         super(ArticlePost, self).save(*args, **kargs)
@@ -49,3 +49,4 @@ class ArticlePost(models.Model):
 
         # def get_url_path(self):
         #     return reverse("article:article_content",args=[self.id,self.slug])
+
