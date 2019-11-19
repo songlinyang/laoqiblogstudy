@@ -1,0 +1,58 @@
+{% extends "article/base.html" %}
+{% block title %}编辑文章{% endblock %}
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'editor/css/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'editor/css/editormd.css' %}"/>
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <form class="form-horizontal" action="." method="post">{% csrf_token %}
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-2 text-right">文章标题:</div>
+            <div class="col-md-10 text-left">{{this_article_form.title}}</div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+                <div class="col-md-2 text-right"><span>栏目:</span></div>
+                <div class="col-md-10 text-left">
+                    <select id="which_column">
+                        {% for column in article_columns %}
+                        <option value="{{column.id}}">
+                           {{column.column}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+        </div>
+        <div class="row" style="margin-top:10px;">
+                <div class="col-md-2 text-right"><span>内容:</span></div>
+                <div id="editormd" class="col-md-10 text-left">
+                <!-- Server-side output Markdown text -->
+                <textarea style="display:none;" id="id_body">
+                    {{article.body}}
+                </textarea>
+                </div>
+        </div>
+        <input type="button" class="btn btn-primary btn-lg" value="发布" onclick="redit_article()">
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'editor/editormd.min.js' %}"></script>
+<script src="{% static 'editor/lib/marked.min.js' %}"></script>
+<script src="{% static 'editor/lib/prettify.min.js' %}"></script>
+<script type="text/javascript">
+    $(function() {
+	    var editor = editormd("editormd",{
+	       width : "100%",
+	       height:640,
+	       syncScrolling:"single",
+	       path:"{% static 'editor/lib/' %}"
+
+	    });
+    });
+</script>
+{% endblock %}

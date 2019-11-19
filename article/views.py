@@ -111,3 +111,44 @@ def article_detail(reqeust,id,slug):
 
     article = get_object_or_404(ArticlePost,id=id,slug=slug)
     return render(reqeust,"article/column/article_detail.html",{"article":article})
+
+"""
+删除文章列表
+"""
+@login_required(login_url="account/newlogin/")
+@csrf_exempt
+@require_POST
+def del_article_post(reqeust):
+    post_id = reqeust.POST.get("article_id","")
+    try:
+        article_list = ArticlePost.objects.get(id=post_id)
+        article_list.delete()
+        return HttpResponse("1")
+    except:
+        return HttpResponse('0')
+
+@login_required(login_url="account/newlogin/")
+@csrf_exempt
+def redit_article_post(request,article_id):
+    #编辑进入查看
+    if request.method == "GET":
+        print("*"*20)
+        try:
+            article_columns = request.user.article_column.all()
+            article = ArticlePost.objects.get(id=article_id)
+            this_article_form = ArticlePostForm(initial={"title":article.title})
+            this_article_column = article.column
+            return render(request,"article/column/redit_article.html",{
+                "article":article, #文章标题
+                "article_columns":article_columns, #栏目类型
+                "this_article_form":this_article_form,
+                "this_article_column":this_article_column
+            })
+        except Exception as e:
+            print(e)
+            return HttpResponse("2")
+
+    #编辑开始提交
+    else:
+        article_title = request.POST.get("title","")
+        article_id = request.POST.get("")

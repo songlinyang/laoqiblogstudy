@@ -21,8 +21,8 @@
             <td><a href="{{article.get_absolute_url}}">{{article.title}}</a></td>
             <td>{{article.column}}</td>
             <td>
-                <a href="javascript:" onclick="edit_article(this,{{article.id}})"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a href="javascript:" onclick="del_article(this,{{article.id}})"><span class="glyphicon glyphicon-trash" style="margin-left:20px;color:red;"></span></a>
+                <a name="edit" href="javascript:" onclick="redit_article(this,{{article.id}})"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a name="delete" href="javascript:" onclick="del_article(this,{{article.id}})"><span class="glyphicon glyphicon-trash" style="margin-left:20px;color:red;"></span></a>
             </td>
         </tr>
         {% empty %}
@@ -30,17 +30,58 @@
         {% endfor %}
     </table>
 </div>
-{% endblock %}
 <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
+<script type="text/javascript">
         function del_article(the,article_id){
-            var article_name = $(the).parent("tr").children("td").eq(1).texWt();
-            layer.open({
-                type:1,
-                skin:"layui-layer-rim",
-                area:["400px","200px"],
-                title:"删除文章",
-            })
+            var index = layer.open({
+            type:1,
+            skin:"layui-layer-rim",
+            area:["400px","150px"],
+            title:"删除文章",
+            content:'<div class="text-center" style="margin-top:20px"><p>是否确定删除文章</p></div>',
+            btn:['确定','取消'],
+            yes:function(index,layero){
+                $.ajax({
+                    url:'{% url "article:del_article" %}',
+                    type:"POST",
+                    data:{"article_id":article_id},
+                    success:function(e){
+                        if (e=="1"){
+                            parent.location.reload();
+                            layer.msg("OK");
+                        }else if(e=="0"){
+                            layer.msg("删除出错");
+                        }else{
+                            layer.msg(e)
+                        }
+                    },
+                });
+            },
+            btn2:function(index,layero){
+                layer.close(index);
+            },
+        });
         }
-    </script>
+</script>
+<script type="text/javascript">
+    function redit_article(this,article_id){
+        var title = $("#id_title").val();
+        var column_id = $("#which_column").val();
+        var body = $("#id_body").val();
+        $.ajax({
+            url:{% url 'article:redit_article' article.id %},
+            type:"POST",
+            data:{"title":title,"body":body,"column_id":column_id},
+            success:function(e){
+                if(e=="1"){
+                    layer.msg("发布成功");
+                    location.href = '{% url 'article:article_list' %}';
+                }else{
+                    layer.msg("发布失败")
+                }
+            },
+        });
+    }
+</script>
+{% endblock %}
