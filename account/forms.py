@@ -10,7 +10,6 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(label="密码",widget=forms.PasswordInput)
     password2 = forms.CharField(label="确认密码",widget=forms.PasswordInput)

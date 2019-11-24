@@ -21,7 +21,7 @@
             <td><a href="{{article.get_absolute_url}}">{{article.title}}</a></td>
             <td>{{article.column}}</td>
             <td>
-                <a name="edit" href="javascript:" onclick="redit_article(this,{{article.id}})"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a name="edit" href="{% url 'article:redit_article' article.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
                 <a name="delete" href="javascript:" onclick="del_article(this,{{article.id}})"><span class="glyphicon glyphicon-trash" style="margin-left:20px;color:red;"></span></a>
             </td>
         </tr>
@@ -63,25 +63,5 @@
             },
         });
         }
-</script>
-<script type="text/javascript">
-    function redit_article(this,article_id){
-        var title = $("#id_title").val();
-        var column_id = $("#which_column").val();
-        var body = $("#id_body").val();
-        $.ajax({
-            url:{% url 'article:redit_article' article.id %},
-            type:"POST",
-            data:{"title":title,"body":body,"column_id":column_id},
-            success:function(e){
-                if(e=="1"){
-                    layer.msg("发布成功");
-                    location.href = '{% url 'article:article_list' %}';
-                }else{
-                    layer.msg("发布失败")
-                }
-            },
-        });
-    }
 </script>
 {% endblock %}

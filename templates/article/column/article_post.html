@@ -12,7 +12,7 @@
         <h3 class="panel-title">发布帖子</h3>
     </div>
     <div style="margin-left:10px">
-        <form class="form-horizontal" action="." method="post">
+        <form id="form1" class="form-horizontal" action="." method="post">
             {% csrf_token %}
             <div class="row" style="margin-top:10px;">
                 <div class="col-md-2 text-right"><span>标题:</span></div>
@@ -67,6 +67,8 @@
             success:function(e){
                 if (e=="1"){
                    layer.msg("发布成功");
+                   {#增加页面跳转功能#}
+                   location.href='{% url 'article:article_list' %}'
                 }else if(e=="2"){
                     layer.msg("sorry,没有对应的栏目");
 

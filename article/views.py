@@ -9,6 +9,7 @@ from .models import ArticleColumn
 from .models import ArticlePost
 from .forms import ArticleColumnForm
 from .forms import ArticlePostForm
+from traceback import print_exc
 # Create your views here.
 
 @login_required(login_url="accpunt/newlogin/")
@@ -48,7 +49,8 @@ def rename_article_column(request):
                 line.column = column_name
                 line.save()
                 return HttpResponse('1')
-        except:
+        except Exception as e:
+            print_exc(e)
             return HttpResponse('2')
     else:
        return HttpResponse("不能为空")
@@ -83,7 +85,8 @@ def article_post(request):
                 new_article_post_from.column=request.user.article_column.get(id=request.POST["column_id"])
                 new_article_post_from.save()
                 return HttpResponse("1")
-            except:
+            except Exception as e:
+                print_exc(e)
                 return HttpResponse("2") #没有对应的栏目
         else:
             return HttpResponse("3")
@@ -99,7 +102,6 @@ def article_post(request):
 @login_required(login_url="accpunt/newlogin/")
 def article_list(request):
     articles = ArticlePost.objects.filter(author=request.user)
-    print(articles)
     return render(request,"article/column/article_list.html",{"articles":articles})
 
 
@@ -132,7 +134,6 @@ def del_article_post(reqeust):
 def redit_article_post(request,article_id):
     #编辑进入查看
     if request.method == "GET":
-        print("*"*20)
         try:
             article_columns = request.user.article_column.all()
             article = ArticlePost.objects.get(id=article_id)
@@ -145,10 +146,18 @@ def redit_article_post(request,article_id):
                 "this_article_column":this_article_column
             })
         except Exception as e:
-            print(e)
+            print("hello")
+            print_exc(e)
             return HttpResponse("2")
 
     #编辑开始提交
-    else:
-        article_title = request.POST.get("title","")
-        article_id = request.POST.get("")
+    elif request.method == "POST":
+        redit_article = ArticlePost.objects.get(id=article_id)
+        try:
+            redit_article.column = request.user.article_column.get(id=request.POST["column_id"])
+            redit_article.title = request.POST['title']
+            redit_article.body = request.POST['body']
+            redit_article.save()
+            return HttpResponse("1")
+        except:
+            return HttpResponse("2")
