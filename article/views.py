@@ -160,4 +160,4 @@ def redit_article_post(request,article_id):
             redit_article.save()
             return HttpResponse("1")
         except:
-            return HttpResponse("2")
+            return HttpResponse("0")
