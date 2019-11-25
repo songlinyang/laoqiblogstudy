@@ -29,6 +29,19 @@
         <p>没有任何数据</p>
         {% endfor %}
     </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page.has_previous %}
+            <a name="pre_page" href="?page={{ page.previous_page_number }}" onclick="">上一页</a>
+            {% endif %}
+            <span class="current">
+                当前 {{ page.number }} -- 总页数 {{ page.paginator.num_pages }}
+            </span>
+            {% if page.has_next %}
+            <a name="next_page" href="?page={{ page.next_page_number }}" onclick="">下一页</a>
+            {% endif %}
+        </span>
+    </div>
 </div>
 <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>

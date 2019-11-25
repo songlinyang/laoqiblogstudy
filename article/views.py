@@ -10,6 +10,7 @@ from .models import ArticlePost
 from .forms import ArticleColumnForm
 from .forms import ArticlePostForm
 from traceback import print_exc
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Create your views here.
 
 @login_required(login_url="accpunt/newlogin/")
@@ -101,8 +102,19 @@ def article_post(request):
 """
 @login_required(login_url="accpunt/newlogin/")
 def article_list(request):
-    articles = ArticlePost.objects.filter(author=request.user)
-    return render(request,"article/column/article_list.html",{"articles":articles})
+    articles_list = ArticlePost.objects.filter(author=request.user)
+    paginator = Paginator(articles_list,10)  # 10表示每一页，存在10条数据，从article_list返回的所有条目中进行分页
+    page = request.GET.get("page")
+    try:
+        current_page = paginator.page(page)
+        articles = current_page.object_list
+    except PageNotAnInteger:
+        current_page = paginator.page(1)
+        articles = current_page.object_list
+    except EmptyPage:
+        current_page = paginator.page(paginator.num_pages)
+        articles = current_page.object_list
+    return render(request,"article/column/article_list.html",{"articles":articles,"page":current_page})
 
 
 """
